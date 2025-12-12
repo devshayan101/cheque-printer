@@ -22,9 +22,22 @@ export interface BankLayout {
   };
 }
 
+export interface FieldOffset {
+  x: number;
+  y: number;
+}
+
 export interface PrintSettings {
   offsetX: number; // mm
   offsetY: number; // mm
   showBackground: boolean;
   fontSize: number;
+  fieldOffsets: {
+    payee: FieldOffset;
+    acPayee: FieldOffset;
+    date: FieldOffset;
+    bearer: FieldOffset;
+    amountNumber: FieldOffset;
+    amountWords: FieldOffset;
+  };
 }

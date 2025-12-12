@@ -15,13 +15,13 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
     // Standard Cheque Size: 203.2mm x 93mm (Aspect Ratio ~2.18)
 
     const { coords } = layout;
-    const { offsetX, offsetY, fontSize } = settings;
+    const { offsetX, offsetY, fontSize, fieldOffsets } = settings;
     const backgroundImage = customImageUrl || layout.imageUrl;
 
     // Helper to calculate absolute position with offsets
-    const pos = (x: number, y: number) => ({
-        left: `${x + offsetX}mm`,
-        top: `${y + offsetY}mm`,
+    const pos = (x: number, y: number, fieldOffset: { x: number, y: number } = { x: 0, y: 0 }) => ({
+        left: `${x + offsetX + fieldOffset.x}mm`,
+        top: `${y + offsetY + fieldOffset.y}mm`,
         fontSize: `${fontSize}pt`,
     });
 
@@ -47,8 +47,8 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
                 <div
                     className="absolute font-bold text-center border-t-2 border-b-2 border-slate-900 -rotate-45 transform origin-center whitespace-nowrap px-4 py-1 print-font"
                     style={{
-                        left: `${coords.acPayee.x + offsetX}mm`,
-                        top: `${coords.acPayee.y + offsetY}mm`,
+                        left: `${coords.acPayee.x + offsetX + fieldOffsets.acPayee.x}mm`,
+                        top: `${coords.acPayee.y + offsetY + fieldOffsets.acPayee.y}mm`,
                         fontSize: `${fontSize - 2}pt`
                     }}
                 >
@@ -58,8 +58,8 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
 
             {/* Date */}
             <div className="absolute flex print-font" style={{
-                left: `${coords.date.x + offsetX}mm`,
-                top: `${coords.date.y + offsetY}mm`
+                left: `${coords.date.x + offsetX + fieldOffsets.date.x}mm`,
+                top: `${coords.date.y + offsetY + fieldOffsets.date.y}mm`
             }}>
                 {dateParts.map((char, i) => (
                     <div key={i} style={{ width: `${coords.date.spacing}mm`, textAlign: 'center', fontSize: `${fontSize}pt`, letterSpacing: 0 }}>
@@ -71,7 +71,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             {/* Payee */}
             <div
                 className="absolute whitespace-nowrap uppercase font-medium print-font"
-                style={pos(coords.payee.x, coords.payee.y)}
+                style={pos(coords.payee.x, coords.payee.y, fieldOffsets.payee)}
             >
                 ***{data.payee}***
             </div>
@@ -80,8 +80,8 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className="absolute uppercase font-medium leading-relaxed print-font"
                 style={{
-                    left: `${coords.amountWords.x + offsetX}mm`,
-                    top: `${coords.amountWords.y + offsetY}mm`,
+                    left: `${coords.amountWords.x + offsetX + fieldOffsets.amountWords.x}mm`,
+                    top: `${coords.amountWords.y + offsetY + fieldOffsets.amountWords.y}mm`,
                     width: `${coords.amountWords.width}mm`,
                     lineHeight: `${coords.amountWords.lineHeight}mm`, // Matches line spacing on physical cheque
                     fontSize: `${fontSize}pt`
@@ -94,7 +94,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className="absolute font-bold print-font"
                 style={{
-                    ...pos(coords.amountNumber.x, coords.amountNumber.y),
+                    ...pos(coords.amountNumber.x, coords.amountNumber.y, fieldOffsets.amountNumber),
                     fontSize: `${fontSize + 2}pt` // Usually slightly larger
                 }}
             >
@@ -106,8 +106,8 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
                 <div
                     className="absolute border-b-2 border-slate-900 w-12 print-font"
                     style={{
-                        left: `${coords.bearer.x + offsetX}mm`,
-                        top: `${coords.bearer.y + offsetY}mm`,
+                        left: `${coords.bearer.x + offsetX + fieldOffsets.bearer.x}mm`,
+                        top: `${coords.bearer.y + offsetY + fieldOffsets.bearer.y}mm`,
                         transform: 'rotate(-5deg)'
                     }}
                 ></div>

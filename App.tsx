@@ -23,7 +23,15 @@ const App: React.FC = () => {
         offsetX: 0,
         offsetY: 0,
         showBackground: true,
-        fontSize: 12
+        fontSize: 12,
+        fieldOffsets: {
+            payee: { x: 0, y: 0 },
+            acPayee: { x: 0, y: 0 },
+            date: { x: 0, y: 0 },
+            bearer: { x: 0, y: 0 },
+            amountNumber: { x: 0, y: 0 },
+            amountWords: { x: 0, y: 0 }
+        }
     });
 
     // Derived
@@ -60,6 +68,19 @@ const App: React.FC = () => {
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const updateFieldOffset = (field: keyof PrintSettings['fieldOffsets'], axis: 'x' | 'y', value: number) => {
+        setSettings(prev => ({
+            ...prev,
+            fieldOffsets: {
+                ...prev.fieldOffsets,
+                [field]: {
+                    ...prev.fieldOffsets[field],
+                    [axis]: value
+                }
+            }
+        }));
     };
 
     const handlePrint = () => {
@@ -311,40 +332,88 @@ const App: React.FC = () => {
                                 <Settings size={16} className="text-amber-600" />
                                 <h3 className="text-sm font-semibold text-slate-800">Print Calibration</h3>
                             </div>
-                            <div className="p-5 space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-medium text-slate-500 mb-1">X Offset (mm)</label>
-                                        <input
-                                            type="number"
-                                            value={settings.offsetX}
-                                            onChange={(e) => setSettings({ ...settings, offsetX: Number(e.target.value) })}
-                                            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-slate-500 mb-1">Y Offset (mm)</label>
-                                        <input
-                                            type="number"
-                                            value={settings.offsetY}
-                                            onChange={(e) => setSettings({ ...settings, offsetY: Number(e.target.value) })}
-                                            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm"
-                                        />
+                            <div className="p-5 space-y-6">
+                                {/* Global Offset */}
+                                <div className="space-y-3 pb-4 border-b border-slate-100">
+                                    <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Global Offset</h4>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-[10px] font-medium text-slate-500 mb-1">Global X (mm)</label>
+                                            <input
+                                                type="number"
+                                                value={settings.offsetX}
+                                                onChange={(e) => setSettings({ ...settings, offsetX: Number(e.target.value) })}
+                                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-[10px] font-medium text-slate-500 mb-1">Global Y (mm)</label>
+                                            <input
+                                                type="number"
+                                                value={settings.offsetY}
+                                                onChange={(e) => setSettings({ ...settings, offsetY: Number(e.target.value) })}
+                                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
+
+                                {/* Font Size */}
                                 <div>
                                     <label className="block text-xs font-medium text-slate-500 mb-1">Font Size (pt)</label>
-                                    <input
-                                        type="range"
-                                        min="8" max="16" step="1"
-                                        value={settings.fontSize}
-                                        onChange={(e) => setSettings({ ...settings, fontSize: Number(e.target.value) })}
-                                        className="w-full"
-                                    />
-                                    <div className="text-right text-xs text-slate-400">{settings.fontSize}pt</div>
+                                    <div className="flex items-center gap-3">
+                                        <input
+                                            type="range"
+                                            min="8" max="16" step="1"
+                                            value={settings.fontSize}
+                                            onChange={(e) => setSettings({ ...settings, fontSize: Number(e.target.value) })}
+                                            className="flex-1"
+                                        />
+                                        <div className="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-600 w-12 text-center">{settings.fontSize}pt</div>
+                                    </div>
                                 </div>
-                                <p className="text-xs text-slate-400 italic">
-                                    * Adjust offsets if your printer margins are shifting the text. Positive X moves right, Positive Y moves down.
+
+                                {/* Individual Offsets */}
+                                <div className="space-y-3">
+                                    <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-between">
+                                        <span>Fine-tune Features</span>
+                                        <span className="text-[10px] font-normal text-slate-400 normal-case">(X / Y mm)</span>
+                                    </h4>
+
+                                    <div className="space-y-2">
+                                        {[
+                                            { id: 'payee', label: 'Payee Name' },
+                                            { id: 'date', label: 'Date' },
+                                            { id: 'amountWords', label: 'Amount (Words)' },
+                                            { id: 'amountNumber', label: 'Amount (Number)' },
+                                            { id: 'acPayee', label: 'A/C Payee' },
+                                            { id: 'bearer', label: 'Bearer Strike' },
+                                        ].map((field) => (
+                                            <div key={field.id} className="flex items-center justify-between gap-2 text-sm">
+                                                <span className="text-slate-600 text-xs w-24 truncate" title={field.label}>{field.label}</span>
+                                                <div className="flex gap-2 flex-1">
+                                                    <input
+                                                        type="number"
+                                                        placeholder="X"
+                                                        value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].x}
+                                                        onChange={(e) => updateFieldOffset(field.id as any, 'x', Number(e.target.value))}
+                                                        className="w-full px-2 py-1 border border-slate-200 rounded text-xs"
+                                                    />
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Y"
+                                                        value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].y}
+                                                        onChange={(e) => updateFieldOffset(field.id as any, 'y', Number(e.target.value))}
+                                                        className="w-full px-2 py-1 border border-slate-200 rounded text-xs"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <p className="text-[10px] text-slate-400 italic leading-tight pt-2 border-t border-slate-100">
+                                    * Positive X moves right, Positive Y moves down.
                                 </p>
                             </div>
                         </div>
