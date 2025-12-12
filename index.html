@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChequeMate AI - Indian Cheque Printer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .print-font {
+        font-family: 'Courier Prime', monospace;
+      }
+      @media print {
+        @page {
+          size: auto;
+          margin: 0mm;
+        }
+        
+        /* Reset margins and overflow to ensure fixed positioning works */
+        html, body {
+          height: auto;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: visible !important;
+        }
+
+        /* Hide everything by default */
+        body * {
+          visibility: hidden;
+        }
+
+        /* Show the printable area and its children */
+        #printable-area, #printable-area * {
+          visibility: visible;
+        }
+
+        /* Position the printable area at the top-left */
+        #printable-area {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 203.2mm !important; /* Force width */
+          height: 93mm !important; /* Force height */
+          z-index: 9999;
+          background: none !important;
+          transform: none !important; /* Reset any transforms from the UI preview */
+          box-shadow: none !important;
+          border: none !important;
+        }
+        
+        /* Ensure helper classes are hidden */
+        .no-print {
+          display: none !important;
+        }
+        
+        /* Specific override for the cheque background image logic */
+        .cheque-bg {
+          opacity: 0 !important;
+          display: none !important;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
