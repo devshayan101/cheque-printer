@@ -1,5 +1,5 @@
 import { BankLayout } from '../types';
-import { CANARA_CHEQUE_IMAGE } from './images';
+import { CANARA_CHEQUE_IMAGE, ICICI_CHEQUE_IMAGE, BOB_CHEQUE_IMAGE, HDFC_CHEQUE_IMAGE } from './images';
 
 // Measurements are approximate based on CTS-2010 standards.
 // Users can fine-tune using offsets.
@@ -22,19 +22,6 @@ export const BANK_LAYOUTS: BankLayout[] = [
     }
   },
   {
-    id: 'standard',
-    name: 'Standard CTS-2010',
-    imageUrl: DEFAULT_CHEQUE_IMAGE,
-    coords: {
-      date: { x: 154, y: 16, spacing: 6.5 },
-      payee: { x: 20, y: 26 },
-      amountWords: { x: 25, y: 36, lineHeight: 8, width: 140 },
-      amountNumber: { x: 152, y: 45 },
-      bearer: { x: 155, y: 30 },
-      acPayee: { x: 50, y: 10 }
-    }
-  },
-  {
     id: 'sbi',
     name: 'State Bank of India (SBI)',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
@@ -50,27 +37,27 @@ export const BANK_LAYOUTS: BankLayout[] = [
   {
     id: 'hdfc',
     name: 'HDFC Bank',
-    imageUrl: DEFAULT_CHEQUE_IMAGE,
+    imageUrl: HDFC_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 13, spacing: 6.3 },
-      payee: { x: 18, y: 23 },
-      amountWords: { x: 24, y: 33, lineHeight: 9, width: 145 },
-      amountNumber: { x: 158, y: 40 },
-      bearer: { x: 160, y: 25 },
-      acPayee: { x: 50, y: 8 }
+      date: { x: 148, y: 8, spacing: 5.0 },
+      payee: { x: 15, y: 20 },
+      amountWords: { x: 28, y: 28, lineHeight: 9, width: 145 },
+      amountNumber: { x: 151, y: 36 },
+      bearer: { x: 176, y: 23 },
+      acPayee: { x: 31, y: 5 }
     }
   },
   {
     id: 'icici',
     name: 'ICICI Bank',
-    imageUrl: DEFAULT_CHEQUE_IMAGE,
+    imageUrl: ICICI_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 14, spacing: 6.2 },
-      payee: { x: 20, y: 25 },
-      amountWords: { x: 22, y: 38, lineHeight: 8, width: 140 },
-      amountNumber: { x: 158, y: 46 },
-      bearer: { x: 160, y: 29 },
-      acPayee: { x: 50, y: 10 }
+      date: { x: 154, y: 8, spacing: 5.0 },
+      payee: { x: 16, y: 19 },
+      amountWords: { x: 27, y: 28, lineHeight: 8, width: 140 },
+      amountNumber: { x: 156, y: 35 },
+      bearer: { x: 182, y: 22 },
+      acPayee: { x: -2, y: 4 }
     }
   },
   {
@@ -102,14 +89,14 @@ export const BANK_LAYOUTS: BankLayout[] = [
   {
     id: 'bob',
     name: 'Bank of Baroda',
-    imageUrl: DEFAULT_CHEQUE_IMAGE,
+    imageUrl: BOB_CHEQUE_IMAGE,
     coords: {
-      date: { x: 161, y: 15, spacing: 6.2 },
-      payee: { x: 20, y: 27 },
-      amountWords: { x: 24, y: 37, lineHeight: 8, width: 140 },
-      amountNumber: { x: 157, y: 46 },
-      bearer: { x: 158, y: 31 },
-      acPayee: { x: 50, y: 10 }
+      date: { x: 154, y: 7, spacing: 5.0 },
+      payee: { x: 15, y: 19 },
+      amountWords: { x: 25, y: 27, lineHeight: 8, width: 140 },
+      amountNumber: { x: 157, y: 36 },
+      bearer: { x: 183, y: 21 },
+      acPayee: { x: 0, y: 4 }
     }
   },
   {
