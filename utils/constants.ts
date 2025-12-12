@@ -5,7 +5,7 @@ import { CANARA_CHEQUE_IMAGE, ICICI_CHEQUE_IMAGE, BOB_CHEQUE_IMAGE, HDFC_CHEQUE_
 // Users can fine-tune using offsets.
 // Coordinates are in mm.
 
-const DEFAULT_CHEQUE_IMAGE = "https://t3.ftcdn.net/jpg/04/37/24/85/360_F_437248530_3Zc3X0E0k0k0k0k0k0k0k0k0k0k0k0.jpg";
+const DEFAULT_CHEQUE_IMAGE = CANARA_CHEQUE_IMAGE;
 
 export const BANK_LAYOUTS: BankLayout[] = [
   {
@@ -26,7 +26,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'State Bank of India (SBI)',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 163, y: 14, spacing: 6.1 },
+      date: { x: 163, y: 14, spacing: 5.1 },
       payee: { x: 22, y: 24 },
       amountWords: { x: 28, y: 35, lineHeight: 9, width: 135 },
       amountNumber: { x: 160, y: 44 },
@@ -65,7 +65,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Axis Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 14, spacing: 6.2 },
+      date: { x: 160, y: 14, spacing: 5.2 },
       payee: { x: 18, y: 24 },
       amountWords: { x: 22, y: 34, lineHeight: 8.5, width: 140 },
       amountNumber: { x: 158, y: 43 },
@@ -78,7 +78,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Punjab National Bank (PNB)',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 162, y: 15, spacing: 6.2 },
+      date: { x: 162, y: 15, spacing: 5.2 },
       payee: { x: 20, y: 26 },
       amountWords: { x: 25, y: 36, lineHeight: 8, width: 138 },
       amountNumber: { x: 156, y: 45 },
@@ -104,7 +104,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Kotak Mahindra Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 158, y: 15, spacing: 6.3 },
+      date: { x: 158, y: 15, spacing: 5.3 },
       payee: { x: 19, y: 25 },
       amountWords: { x: 23, y: 35, lineHeight: 8, width: 142 },
       amountNumber: { x: 155, y: 44 },
@@ -117,7 +117,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Union Bank of India',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 16, spacing: 6.2 },
+      date: { x: 160, y: 16, spacing: 5.2 },
       payee: { x: 20, y: 28 },
       amountWords: { x: 25, y: 38, lineHeight: 8, width: 138 },
       amountNumber: { x: 156, y: 47 },
@@ -130,7 +130,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'IDFC First Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 14, spacing: 6.2 },
+      date: { x: 160, y: 14, spacing: 5.2 },
       payee: { x: 20, y: 24 },
       amountWords: { x: 24, y: 34, lineHeight: 8.5, width: 140 },
       amountNumber: { x: 158, y: 43 },
@@ -143,7 +143,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'IndusInd Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 159, y: 15, spacing: 6.3 },
+      date: { x: 159, y: 15, spacing: 5.3 },
       payee: { x: 20, y: 26 },
       amountWords: { x: 24, y: 36, lineHeight: 8, width: 140 },
       amountNumber: { x: 157, y: 45 },
@@ -156,7 +156,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Yes Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 160, y: 14, spacing: 6.2 },
+      date: { x: 160, y: 14, spacing: 5.2 },
       payee: { x: 20, y: 25 },
       amountWords: { x: 25, y: 35, lineHeight: 8, width: 138 },
       amountNumber: { x: 158, y: 44 },
@@ -169,7 +169,7 @@ export const BANK_LAYOUTS: BankLayout[] = [
     name: 'Indian Bank',
     imageUrl: DEFAULT_CHEQUE_IMAGE,
     coords: {
-      date: { x: 162, y: 16, spacing: 6.2 },
+      date: { x: 162, y: 16, spacing: 5.2 },
       payee: { x: 21, y: 27 },
       amountWords: { x: 26, y: 37, lineHeight: 8, width: 135 },
       amountNumber: { x: 158, y: 46 },
