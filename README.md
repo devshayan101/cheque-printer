@@ -17,8 +17,9 @@
 *   **Live Preview**: Real-time visual preview of the cheque as you type, with support for bank-specific background images.
 *   **Smart Features**:
     *   **Auto-Number to Words**: Automatically converts the numeric amount into words.
-    *   **Smart Fill**: (AI-powered data extraction/filling - *if applicable based on code*).
+    *   **Smart Fill (Powered by Gemini AI)**: Type naturally (e.g., "Pay 25000 to Rajesh for rent") and let AI fill the cheque details for you.
 *   **Print Calibration**: Fine-tune printing positions (X/Y offsets) to match your specific printer's margins.
+*   **Drag & Drop Calibration**: Directly drag elements on the cheque preview to adjust their print positions, or use the fine-tune controls for precision.
 *   **Customization**:
     *   Toggle "A/C Payee" crossing.
     *   Toggle "Bearer" strike-through.
@@ -74,7 +75,7 @@ Open your browser and navigate to `http://localhost:5173` (or the port shown in 
 4.  **Calibrate**:
     *   Do a test print on a blank A4 sheet.
     *   Place it over your cheque leaf to check alignment.
-    *   Use the **X Offset** and **Y Offset** controls to adjust the text position if necessary.
+    *   Simply **drag and drop** the text on the screen to match the alignment, or use the **X/Y Offset** controls for fine adjustments.
 5.  **Print**:
     *   Click "Print Cheque".
     *   **Important**: In the print dialog, ensure **Paper Size** is set to **A4**.
