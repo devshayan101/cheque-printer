@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChequeData, BankLayout, PrintSettings } from './types';
 import { numberToWords } from './utils/currency';
 import { BANK_LAYOUTS } from './utils/constants';
@@ -82,6 +82,16 @@ const App: React.FC = () => {
             }
         }));
     };
+
+    const handleFieldDrag = useCallback((field: keyof PrintSettings['fieldOffsets'], newOffset: { x: number, y: number }) => {
+        setSettings(prev => ({
+            ...prev,
+            fieldOffsets: {
+                ...prev.fieldOffsets,
+                [field]: newOffset
+            }
+        }));
+    }, []);
 
     const handlePrint = () => {
         // Standard window.print() often fails in sandboxed iframes (like AI previews) due to missing 'allow-modals'.
@@ -434,6 +444,7 @@ const App: React.FC = () => {
                                         layout={selectedLayout}
                                         settings={settings}
                                         customImageUrl={customBg}
+                                        onFieldDrag={handleFieldDrag}
                                     />
                                 </div>
                             </div>
