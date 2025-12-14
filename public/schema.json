@@ -1,0 +1,140 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://chequekart.org/#organization",
+      "name": "ChequeKart",
+      "description": "Smart online cheque printing software for Indian banks",
+      "url": "https://chequekart.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://chequekart.org/logo.png",
+        "width": 250,
+        "height": 60
+      },
+      "sameAs": [
+        "https://www.facebook.com/chequekart",
+        "https://twitter.com/chequekart",
+        "https://www.linkedin.com/company/chequekart"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Support",
+        "email": "support@chequekart.org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://chequekart.org/#software",
+      "name": "ChequeKart",
+      "description": "Fast, accurate, and error-free online cheque printing software for all Indian banks",
+      "url": "https://chequekart.org",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "creator": {
+        "@type": "Organization",
+        "@id": "https://chequekart.org/#organization"
+      },
+      "featureList": [
+        "AI-powered amount to words conversion",
+        "Support for all major Indian banks",
+        "Precise field alignment",
+        "No software installation required",
+        "Secure local processing"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://chequekart.org/#website",
+      "url": "https://chequekart.org",
+      "name": "ChequeKart",
+      "description": "Online cheque printing software for Indian banks",
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://chequekart.org/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://chequekart.org/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is ChequeKart secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, ChequeKart is completely secure. All data processing happens in your browser. We never store, transmit, or access any of your cheque information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which banks does ChequeKart support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ChequeKart supports all major Indian banks including HDFC, ICICI, SBI, Canara, BOB, and many others."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to download any software?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, ChequeKart is a web-based tool. It works on any device with a browser. No downloads or installation required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I adjust field positions on my cheque?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, ChequeKart provides fine-tuning controls for each field position. You can adjust the X and Y coordinates to match your specific cheque layout."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://chequekart.org"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "HDFC Cheque Printer",
+          "item": "https://chequekart.org/hdfc"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "ICICI Cheque Printer",
+          "item": "https://chequekart.org/icici"
+        }
+      ]
+    }
+  ]
+}

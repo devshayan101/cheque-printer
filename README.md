@@ -44,8 +44,8 @@
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/chequemate-ai.git
-    cd chequemate-ai
+    git clone https://github.com/yourusername/chequekart.git
+    cd chequekart
     ```
 
 2.  Install dependencies:

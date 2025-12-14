@@ -1,0 +1,35 @@
+# ChequeKart - robots.txt
+# This file guides search engine crawlers on how to interact with the website
+
+# Allow all crawlers to access the entire site
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /*.json$
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://chequekart.org/sitemap.xml
+Sitemap: https://chequekart.org/sitemap-banks.xml
+
+# Request rate limiting
+Request-rate: 30/60
