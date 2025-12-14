@@ -28,13 +28,13 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
         startOffsetY: number;
     } | null>(null);
 
-    // Handle Dragging
+    // Handle Dragging (Mouse + Touch)
     useEffect(() => {
         if (!dragState || !onFieldDrag) return;
 
-        const handleMouseMove = (e: MouseEvent) => {
-            const dxPx = e.clientX - dragState.startX;
-            const dyPx = e.clientY - dragState.startY;
+        const handleMove = (clientX: number, clientY: number) => {
+            const dxPx = clientX - dragState.startX;
+            const dyPx = clientY - dragState.startY;
 
             // Convert px to mm (approx 3.7795 px per mm)
             const dxMm = dxPx / 3.7795;
@@ -46,16 +46,30 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             onFieldDrag(dragState.field, { x: newX, y: newY });
         };
 
-        const handleMouseUp = () => {
+        const handleMouseMove = (e: MouseEvent) => {
+            handleMove(e.clientX, e.clientY);
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            if (e.cancelable) e.preventDefault(); // Prevent scrolling while dragging
+            const touch = e.touches[0];
+            handleMove(touch.clientX, touch.clientY);
+        };
+
+        const handleEnd = () => {
             setDragState(null);
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('mouseup', handleEnd);
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
+        window.addEventListener('touchend', handleEnd);
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('mouseup', handleEnd);
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('touchend', handleEnd);
         };
     }, [dragState, onFieldDrag]);
 
@@ -72,7 +86,20 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
         });
     };
 
-    const getDraggableClass = () => onFieldDrag ? 'cursor-move hover:outline hover:outline-2 hover:outline-indigo-400/50 hover:bg-indigo-50/10 rounded transition-colors' : '';
+    const handleTouchStart = (e: React.TouchEvent, field: keyof PrintSettings['fieldOffsets']) => {
+        if (!onFieldDrag) return;
+        e.stopPropagation();
+        const touch = e.touches[0];
+        setDragState({
+            field,
+            startX: touch.clientX,
+            startY: touch.clientY,
+            startOffsetX: fieldOffsets[field].x,
+            startOffsetY: fieldOffsets[field].y
+        });
+    };
+
+    const getDraggableClass = () => onFieldDrag ? 'cursor-move touch-none hover:outline hover:outline-2 hover:outline-indigo-400/50 hover:bg-indigo-50/10 rounded transition-colors' : '';
 
     // Helper to calculate absolute position with offsets
     const pos = (x: number, y: number, fieldOffset: { x: number, y: number } = { x: 0, y: 0 }) => ({
@@ -103,6 +130,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
                 <div
                     className={`absolute font-bold text-center border-t-2 border-b-2 border-slate-900 -rotate-45 transform origin-center whitespace-nowrap px-4 py-1 print-font ${getDraggableClass()}`}
                     onMouseDown={(e) => handleMouseDown(e, 'acPayee')}
+                    onTouchStart={(e) => handleTouchStart(e, 'acPayee')}
                     style={{
                         left: `${coords.acPayee.x + offsetX + fieldOffsets.acPayee.x}mm`,
                         top: `${coords.acPayee.y + offsetY + fieldOffsets.acPayee.y}mm`,
@@ -117,6 +145,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className={`absolute flex print-font ${getDraggableClass()}`}
                 onMouseDown={(e) => handleMouseDown(e, 'date')}
+                onTouchStart={(e) => handleTouchStart(e, 'date')}
                 style={{
                     left: `${coords.date.x + offsetX + fieldOffsets.date.x}mm`,
                     top: `${coords.date.y + offsetY + fieldOffsets.date.y}mm`
@@ -133,6 +162,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className={`absolute whitespace-nowrap uppercase font-medium print-font ${getDraggableClass()}`}
                 onMouseDown={(e) => handleMouseDown(e, 'payee')}
+                onTouchStart={(e) => handleTouchStart(e, 'payee')}
                 style={pos(coords.payee.x, coords.payee.y, fieldOffsets.payee)}
             >
                 ***{data.payee}***
@@ -142,6 +172,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className={`absolute uppercase font-medium leading-relaxed print-font ${getDraggableClass()}`}
                 onMouseDown={(e) => handleMouseDown(e, 'amountWords')}
+                onTouchStart={(e) => handleTouchStart(e, 'amountWords')}
                 style={{
                     left: `${coords.amountWords.x + offsetX + fieldOffsets.amountWords.x}mm`,
                     top: `${coords.amountWords.y + offsetY + fieldOffsets.amountWords.y}mm`,
@@ -157,6 +188,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
             <div
                 className={`absolute font-bold print-font ${getDraggableClass()}`}
                 onMouseDown={(e) => handleMouseDown(e, 'amountNumber')}
+                onTouchStart={(e) => handleTouchStart(e, 'amountNumber')}
                 style={{
                     ...pos(coords.amountNumber.x, coords.amountNumber.y, fieldOffsets.amountNumber),
                     fontSize: `${fontSize + 2}pt` // Usually slightly larger
@@ -170,6 +202,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
                 <div
                     className={`absolute border-b-2 border-slate-900 w-12 print-font ${getDraggableClass()}`}
                     onMouseDown={(e) => handleMouseDown(e, 'bearer')}
+                    onTouchStart={(e) => handleTouchStart(e, 'bearer')}
                     style={{
                         left: `${coords.bearer.x + offsetX + fieldOffsets.bearer.x}mm`,
                         top: `${coords.bearer.y + offsetY + fieldOffsets.bearer.y}mm`,
