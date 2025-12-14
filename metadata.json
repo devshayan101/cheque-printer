@@ -1,5 +1,5 @@
 {
-  "name": "ChequeMate AI",
-  "description": "A smart cheque printing utility optimized for Indian banks. Features manual entry, AI-powered smart fill using Gemini, and customizable layouts for precise printing on physical cheque leaves.",
+  "name": "ChequeKart",
+  "description": "A smart cheque printing utility optimized for Indian banks. Features manual entry and customizable layouts for precise printing on physical cheque leaves.",
   "requestFramePermissions": []
 }

@@ -1,6 +1,6 @@
-# ChequeMate AI
+# ChequeKart
 
-**ChequeMate AI** is a smart, browser-based cheque printing application designed to simplify the process of filling and printing bank cheques. It ensures precise alignment with CTS-2010 standards and supports multiple bank layouts.
+**ChequeKart** is a smart, browser-based cheque printing application designed to simplify the process of filling and printing bank cheques. It ensures precise alignment with CTS-2010 standards and supports multiple bank layouts.
 
 ## 🌟 Features
 
@@ -17,7 +17,7 @@
 *   **Live Preview**: Real-time visual preview of the cheque as you type, with support for bank-specific background images.
 *   **Smart Features**:
     *   **Auto-Number to Words**: Automatically converts the numeric amount into words.
-    *   **Smart Fill (Powered by Gemini AI)**: Type naturally (e.g., "Pay 25000 to Rajesh for rent") and let AI fill the cheque details for you.
+
 *   **Print Calibration**: Fine-tune printing positions (X/Y offsets) to match your specific printer's margins.
 *   **Drag & Drop Calibration**: Directly drag elements on the cheque preview to adjust their print positions, or use the fine-tune controls for precision.
 *   **Customization**:
@@ -85,7 +85,7 @@ Open your browser and navigate to `http://localhost:5173` (or the port shown in 
 ## 📂 Project Structure
 
 *   `src/App.tsx`: Main application component.
-*   `src/components/`: Reusable UI components (ChequePreview, SmartFill).
+*   `src/components/`: Reusable UI components (ChequePreview).
 *   `src/utils/`: Utility functions (currency conversion) and constants (bank layouts).
 *   `public/images/`: Static assets for cheque backgrounds.
 

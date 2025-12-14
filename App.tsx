@@ -3,7 +3,6 @@ import { ChequeData, BankLayout, PrintSettings } from './types';
 import { numberToWords } from './utils/currency';
 import { BANK_LAYOUTS } from './utils/constants';
 import { ChequePreview } from './components/ChequePreview';
-import { SmartFill } from './components/SmartFill';
 import { Printer, Settings, Building2, AlignHorizontalJustifyStart, Type, Image as ImageIcon, Upload } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -55,9 +54,7 @@ const App: React.FC = () => {
         }
     };
 
-    const handleSmartFillData = (filledData: Partial<ChequeData>) => {
-        setData(prev => ({ ...prev, ...filledData }));
-    };
+
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -110,7 +107,7 @@ const App: React.FC = () => {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Print Cheque - ChequeMate AI</title>
+          <title>Print Cheque - ChequeKart</title>
           <script src="https://cdn.tailwindcss.com"></script>
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
           <style>
@@ -174,7 +171,7 @@ const App: React.FC = () => {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-600">
-                                ChequeMate AI
+                                ChequeKart
                             </h1>
                             <p className="text-xs text-slate-500 font-medium">Smart Cheque Printer</p>
                         </div>
@@ -197,8 +194,7 @@ const App: React.FC = () => {
                     {/* Left Column: Controls */}
                     <div className="lg:col-span-1 space-y-6 no-print">
 
-                        {/* Smart Fill Section */}
-                        <SmartFill onFill={handleSmartFillData} />
+
 
                         {/* Main Form */}
                         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
