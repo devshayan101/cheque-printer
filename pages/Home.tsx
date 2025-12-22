@@ -167,7 +167,18 @@ export const Home: React.FC = () => {
             <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 no-print transition-colors">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/images/logo.png" alt="ChequeKart Logo" className="w-10 h-10 object-contain" />
+                        <div className="relative w-10 h-10">
+                            <img
+                                src="/images/logo.png"
+                                alt="ChequeKart Logo"
+                                className="w-10 h-10 object-contain absolute top-0 left-0 transition-opacity duration-300 dark:opacity-0"
+                            />
+                            <img
+                                src="/images/logo-dark.png"
+                                alt="ChequeKart Logo"
+                                className="w-10 h-10 object-contain absolute top-0 left-0 transition-opacity duration-300 opacity-0 dark:opacity-100"
+                            />
+                        </div>
                         <div>
                             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-500">
                                 ChequeKart
