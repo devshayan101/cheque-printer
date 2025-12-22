@@ -99,7 +99,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
         });
     };
 
-    const getDraggableClass = () => onFieldDrag ? 'cursor-move touch-none hover:outline hover:outline-2 hover:outline-indigo-400/50 hover:bg-indigo-50/10 rounded transition-colors' : '';
+    const getDraggableClass = () => onFieldDrag ? 'cursor-move touch-none hover:outline hover:outline-2 hover:outline-teal-400/50 hover:bg-teal-50/20 rounded-sm transition-colors' : '';
 
     // Helper to calculate absolute position with offsets
     const pos = (x: number, y: number, fieldOffset: { x: number, y: number } = { x: 0, y: 0 }) => ({

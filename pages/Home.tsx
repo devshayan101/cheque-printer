@@ -3,7 +3,7 @@ import { ChequeData, BankLayout, PrintSettings } from '../types';
 import { numberToWords } from '../utils/currency';
 import { BANK_LAYOUTS } from '../utils/constants';
 import { ChequePreview } from '../components/ChequePreview';
-import { Printer, Settings, Building2, AlignHorizontalJustifyStart, Type, Image as ImageIcon, Upload } from 'lucide-react';
+import { Printer, Settings, Building2, Type, Image as ImageIcon, Upload } from 'lucide-react';
 
 export const Home: React.FC = () => {
     // State
@@ -163,24 +163,22 @@ export const Home: React.FC = () => {
     return (
         <div className="bg-slate-50 text-slate-900 pb-12 flex-grow">
             {/* Header */}
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
+            <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 no-print">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="bg-indigo-600 p-2 rounded-lg text-white">
-                            <AlignHorizontalJustifyStart size={24} />
-                        </div>
+                    <div className="flex items-center gap-3">
+                        <img src="/images/logo.png" alt="ChequeKart Logo" className="w-10 h-10 object-contain" />
                         <div>
-                            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-600">
+                            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-500">
                                 ChequeKart
                             </h1>
-                            <p className="text-xs text-slate-500 font-medium">Smart Cheque Printer</p>
+                            <p className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">Smart Cheque Printer</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
                             type="button"
                             onClick={handlePrint}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-semibold shadow-sm flex items-center gap-2 transition-transform active:scale-95"
+                            className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-teal-200/50 flex items-center gap-2 transition-all active:scale-95 hover:shadow-teal-300/50"
                         >
                             <Printer size={18} /> Print Cheque
                         </button>
@@ -197,24 +195,24 @@ export const Home: React.FC = () => {
 
 
                         {/* Main Form */}
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
-                                <h2 className="font-semibold text-slate-800 flex items-center gap-2">
-                                    <Type size={16} className="text-slate-500" /> Details
+                        <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+                            <div className="px-6 py-5 border-b border-gray-100 bg-gray-50/30 flex items-center justify-between">
+                                <h2 className="font-semibold text-gray-800 flex items-center gap-2">
+                                    <Type size={18} className="text-teal-600" /> <span className="tracking-tight">Details</span>
                                 </h2>
                             </div>
 
-                            <div className="p-5 space-y-4">
+                            <div className="p-6 space-y-5">
                                 {/* Bank Selector */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5">Bank Layout</label>
-                                    <div className="space-y-3">
-                                        <div className="relative">
-                                            <Building2 className="absolute left-3 top-2.5 text-slate-400" size={16} />
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Bank Layout</label>
+                                    <div className="space-y-4">
+                                        <div className="relative group">
+                                            <Building2 className="absolute left-3.5 top-3 text-gray-400 group-hover:text-teal-500 transition-colors" size={18} />
                                             <select
                                                 value={selectedBankId}
                                                 onChange={(e) => setSelectedBankId(e.target.value)}
-                                                className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none appearance-none transition-all"
+                                                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 hover:bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none appearance-none transition-all cursor-pointer text-gray-700 font-medium"
                                             >
                                                 {BANK_LAYOUTS.map(bank => (
                                                     <option key={bank.id} value={bank.id}>{bank.name}</option>
@@ -225,9 +223,9 @@ export const Home: React.FC = () => {
                                         {/* Custom Background Upload */}
                                         <div className="flex items-center gap-2">
                                             <label className="flex-1 cursor-pointer group">
-                                                <div className="flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-slate-300 rounded-lg bg-slate-50 hover:bg-slate-100 hover:border-indigo-400 transition-all">
-                                                    <Upload size={14} className="text-slate-500 group-hover:text-indigo-600" />
-                                                    <span className="text-xs font-medium text-slate-600 group-hover:text-indigo-700">
+                                                <div className="flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 rounded-xl bg-gray-50/50 hover:bg-teal-50/30 hover:border-teal-400 transition-all">
+                                                    <Upload size={16} className="text-gray-400 group-hover:text-teal-600 transition-colors" />
+                                                    <span className="text-xs font-medium text-gray-600 group-hover:text-teal-700 transition-colors">
                                                         {customBg ? 'Change Cheque Image' : 'Upload Bank Cheque Image'}
                                                     </span>
                                                 </div>
@@ -236,7 +234,7 @@ export const Home: React.FC = () => {
                                             {customBg && (
                                                 <button
                                                     onClick={() => setCustomBg(null)}
-                                                    className="text-xs text-red-500 hover:text-red-700 underline"
+                                                    className="text-xs text-red-500 hover:text-red-600 font-medium px-2 py-1 hover:bg-red-50 rounded"
                                                 >
                                                     Reset
                                                 </button>
@@ -250,81 +248,81 @@ export const Home: React.FC = () => {
 
                                 {/* Date */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5">Date</label>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Date</label>
                                     <input
                                         type="date"
                                         value={data.date}
                                         onChange={(e) => setData({ ...data, date: e.target.value })}
-                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white"
                                     />
                                 </div>
 
                                 {/* Payee */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5">Pay Name</label>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Pay Name</label>
                                     <input
                                         type="text"
                                         value={data.payee}
                                         onChange={(e) => setData({ ...data, payee: e.target.value })}
                                         placeholder="e.g. John Doe"
-                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white placeholder:text-gray-400"
                                     />
                                 </div>
 
                                 {/* Amount Number */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5">Amount (₹)</label>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount (₹)</label>
                                     <input
                                         type="number"
                                         value={data.amount}
                                         onChange={(e) => handleAmountChange(e.target.value)}
                                         placeholder="0.00"
-                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-mono"
+                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none font-mono transition-all bg-gray-50 focus:bg-white text-lg font-medium text-teal-900"
                                     />
                                 </div>
 
                                 {/* Amount Words */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5">Amount in Words</label>
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount in Words</label>
                                     <textarea
                                         value={data.amountInWords}
                                         onChange={(e) => setData({ ...data, amountInWords: e.target.value })}
                                         rows={2}
-                                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none bg-slate-50"
+                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none resize-none bg-gray-50 focus:bg-white transition-all text-gray-600"
                                     />
                                 </div>
 
                                 {/* Toggles */}
                                 <div className="grid grid-cols-2 gap-4 pt-2">
-                                    <label className="flex items-center gap-2 cursor-pointer bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-indigo-100 transition-colors">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all group">
                                         <input
                                             type="checkbox"
                                             checked={data.isAccountPayee}
                                             onChange={(e) => setData({ ...data, isAccountPayee: e.target.checked })}
-                                            className="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
                                         />
-                                        <span className="text-sm text-slate-700 font-medium">Cross (A/C Payee)</span>
+                                        <span className="text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">Cross (A/C Payee)</span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-indigo-100 transition-colors">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all group">
                                         <input
                                             type="checkbox"
                                             checked={data.isBearer}
                                             onChange={(e) => setData({ ...data, isBearer: e.target.checked })}
-                                            className="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
                                         />
-                                        <span className="text-sm text-slate-700 font-medium">Bearer (No Strike)</span>
+                                        <span className="text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">Bearer (No Strike)</span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 cursor-pointer bg-slate-50 p-2 rounded-lg border border-slate-100 hover:border-indigo-100 transition-colors col-span-2">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all col-span-2 group">
                                         <input
                                             type="checkbox"
                                             checked={settings.showBackground}
                                             onChange={(e) => setSettings({ ...settings, showBackground: e.target.checked })}
-                                            className="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
                                         />
-                                        <div className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                                            <ImageIcon size={16} className="text-slate-400" />
+                                        <div className="flex items-center gap-2 text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">
+                                            <ImageIcon size={16} className="text-gray-400 group-hover:text-teal-500" />
                                             <span>Show Cheque Image in Preview</span>
                                         </div>
                                     </label>
@@ -333,10 +331,10 @@ export const Home: React.FC = () => {
                         </div>
 
                         {/* Calibration Panel - Always Visible */}
-                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                            <div className="px-5 py-3 border-b border-slate-100 bg-amber-50/50 flex items-center gap-2">
-                                <Settings size={16} className="text-amber-600" />
-                                <h3 className="text-sm font-semibold text-slate-800">Print Calibration</h3>
+                        <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
+                            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
+                                <Settings size={16} className="text-gray-500" />
+                                <h3 className="text-sm font-semibold text-gray-800">Print Calibration</h3>
                             </div>
                             <div className="p-5 space-y-6">
                                 {/* Global Offset */}
@@ -427,8 +425,9 @@ export const Home: React.FC = () => {
 
                     {/* Right Column: Preview */}
                     <div className="lg:col-span-2 space-y-4">
-                        <div className="bg-slate-100 rounded-xl shadow-inner border border-slate-200 p-4 lg:p-8 min-h-[400px] flex flex-col items-center justify-center relative">
-                            <div className="absolute top-4 left-4 text-xs font-medium text-slate-400 uppercase tracking-widest no-print">
+                        <div className="bg-gray-100 rounded-3xl p-4 lg:p-10 min-h-[500px] flex flex-col items-center justify-center relative shadow-inner border border-gray-200">
+                            <div className="absolute top-6 left-8 text-xs font-bold text-gray-400 uppercase tracking-widest no-print flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
                                 Live Preview ({selectedLayout.name})
                             </div>
 
