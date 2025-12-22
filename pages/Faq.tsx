@@ -4,16 +4,16 @@ import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export const Faq: React.FC = () => {
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
             <Navbar />
 
             <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center p-3.5 bg-teal-50 text-teal-600 rounded-2xl mb-6 shadow-sm shadow-teal-100">
+                    <div className="inline-flex items-center justify-center p-3.5 bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-2xl mb-6 shadow-sm shadow-teal-100 dark:shadow-none">
                         <HelpCircle size={32} />
                     </div>
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">Frequently Asked Questions</h1>
-                    <p className="text-lg text-gray-600">
+                    <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">Frequently Asked Questions</h1>
+                    <p className="text-lg text-gray-600 dark:text-gray-400">
                         Everything you need to know about ChequeKart and printing cheques.
                     </p>
                 </div>
@@ -38,15 +38,15 @@ export const Faq: React.FC = () => {
                             a: "Absolutely. ChequeKart runs entirely in your browser. No cheque data is ever sent to our servers. What you type stays on your device."
                         }
                     ].map((item, i) => (
-                        <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                        <div key={i} className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-md dark:shadow-none transition-all">
                             <details className="group">
                                 <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                                    <h3 className="text-lg font-semibold text-gray-900 pr-4">{item.q}</h3>
-                                    <span className="text-gray-400 group-open:text-teal-600 group-open:rotate-180 transition-all duration-300">
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 pr-4">{item.q}</h3>
+                                    <span className="text-gray-400 dark:text-gray-500 group-open:text-teal-600 dark:group-open:text-teal-400 group-open:rotate-180 transition-all duration-300">
                                         <ChevronDown size={20} />
                                     </span>
                                 </summary>
-                                <div className="px-6 pb-6 pt-0 text-gray-600 leading-relaxed border-t border-transparent group-open:border-gray-50">
+                                <div className="px-6 pb-6 pt-0 text-gray-600 dark:text-gray-400 leading-relaxed border-t border-transparent group-open:border-gray-50 dark:group-open:border-gray-800">
                                     {item.a}
                                 </div>
                             </details>

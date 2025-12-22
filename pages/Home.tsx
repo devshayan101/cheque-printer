@@ -4,6 +4,7 @@ import { numberToWords } from '../utils/currency';
 import { BANK_LAYOUTS } from '../utils/constants';
 import { ChequePreview } from '../components/ChequePreview';
 import { Printer, Settings, Building2, Type, Image as ImageIcon, Upload } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export const Home: React.FC = () => {
     // State
@@ -161,9 +162,9 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <div className="bg-slate-50 text-slate-900 pb-12 flex-grow">
+        <div className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 pb-12 flex-grow transition-colors duration-300">
             {/* Header */}
-            <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 no-print">
+            <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 no-print transition-colors">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <img src="/images/logo.png" alt="ChequeKart Logo" className="w-10 h-10 object-contain" />
@@ -171,10 +172,11 @@ export const Home: React.FC = () => {
                             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-500">
                                 ChequeKart
                             </h1>
-                            <p className="text-[10px] text-gray-500 font-medium tracking-wide uppercase">Smart Cheque Printer</p>
+                            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">Smart Cheque Printer</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        <ThemeToggle />
                         <button
                             type="button"
                             onClick={handlePrint}
@@ -195,9 +197,9 @@ export const Home: React.FC = () => {
 
 
                         {/* Main Form */}
-                        <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
-                            <div className="px-6 py-5 border-b border-gray-100 bg-gray-50/30 flex items-center justify-between">
-                                <h2 className="font-semibold text-gray-800 flex items-center gap-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 overflow-hidden transition-all">
+                            <div className="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-800/30 flex items-center justify-between">
+                                <h2 className="font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2">
                                     <Type size={18} className="text-teal-600" /> <span className="tracking-tight">Details</span>
                                 </h2>
                             </div>
@@ -212,7 +214,7 @@ export const Home: React.FC = () => {
                                             <select
                                                 value={selectedBankId}
                                                 onChange={(e) => setSelectedBankId(e.target.value)}
-                                                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 hover:bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none appearance-none transition-all cursor-pointer text-gray-700 font-medium"
+                                                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 hover:bg-white dark:bg-gray-800 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none appearance-none transition-all cursor-pointer text-gray-700 dark:text-gray-200 font-medium"
                                             >
                                                 {BANK_LAYOUTS.map(bank => (
                                                     <option key={bank.id} value={bank.id}>{bank.name}</option>
@@ -223,9 +225,9 @@ export const Home: React.FC = () => {
                                         {/* Custom Background Upload */}
                                         <div className="flex items-center gap-2">
                                             <label className="flex-1 cursor-pointer group">
-                                                <div className="flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 rounded-xl bg-gray-50/50 hover:bg-teal-50/30 hover:border-teal-400 transition-all">
-                                                    <Upload size={16} className="text-gray-400 group-hover:text-teal-600 transition-colors" />
-                                                    <span className="text-xs font-medium text-gray-600 group-hover:text-teal-700 transition-colors">
+                                                <div className="flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50/50 dark:bg-gray-800/50 hover:bg-teal-50/30 hover:border-teal-400 transition-all">
+                                                    <Upload size={16} className="text-gray-400 dark:text-gray-500 group-hover:text-teal-600 transition-colors" />
+                                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">
                                                         {customBg ? 'Change Cheque Image' : 'Upload Bank Cheque Image'}
                                                     </span>
                                                 </div>
@@ -253,7 +255,7 @@ export const Home: React.FC = () => {
                                         type="date"
                                         value={data.date}
                                         onChange={(e) => setData({ ...data, date: e.target.value })}
-                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white"
+                                        className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 dark:text-gray-100"
                                     />
                                 </div>
 
@@ -265,7 +267,7 @@ export const Home: React.FC = () => {
                                         value={data.payee}
                                         onChange={(e) => setData({ ...data, payee: e.target.value })}
                                         placeholder="e.g. John Doe"
-                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white placeholder:text-gray-400"
+                                        className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none transition-all bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 placeholder:text-gray-400 dark:text-gray-100"
                                     />
                                 </div>
 
@@ -277,7 +279,7 @@ export const Home: React.FC = () => {
                                         value={data.amount}
                                         onChange={(e) => handleAmountChange(e.target.value)}
                                         placeholder="0.00"
-                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none font-mono transition-all bg-gray-50 focus:bg-white text-lg font-medium text-teal-900"
+                                        className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none font-mono transition-all bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 text-lg font-medium text-teal-900 dark:text-teal-400"
                                     />
                                 </div>
 
@@ -288,41 +290,41 @@ export const Home: React.FC = () => {
                                         value={data.amountInWords}
                                         onChange={(e) => setData({ ...data, amountInWords: e.target.value })}
                                         rows={2}
-                                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none resize-none bg-gray-50 focus:bg-white transition-all text-gray-600"
+                                        className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none resize-none bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 transition-all text-gray-600 dark:text-gray-300"
                                     />
                                 </div>
 
                                 {/* Toggles */}
                                 <div className="grid grid-cols-2 gap-4 pt-2">
-                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all group">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-500 hover:bg-teal-50/20 transition-all group">
                                         <input
                                             type="checkbox"
                                             checked={data.isAccountPayee}
                                             onChange={(e) => setData({ ...data, isAccountPayee: e.target.checked })}
-                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                         />
-                                        <span className="text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">Cross (A/C Payee)</span>
+                                        <span className="text-sm text-gray-700 dark:text-gray-300 font-medium group-hover:text-teal-900 dark:group-hover:text-teal-400 transition-colors">Cross (A/C Payee)</span>
                                     </label>
 
-                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all group">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-500 hover:bg-teal-50/20 transition-all group">
                                         <input
                                             type="checkbox"
                                             checked={data.isBearer}
                                             onChange={(e) => setData({ ...data, isBearer: e.target.checked })}
-                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                         />
-                                        <span className="text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">Bearer (No Strike)</span>
+                                        <span className="text-sm text-gray-700 dark:text-gray-300 font-medium group-hover:text-teal-900 dark:group-hover:text-teal-400 transition-colors">Bearer (No Strike)</span>
                                     </label>
 
-                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 p-3 rounded-xl border border-gray-200 hover:border-teal-300 hover:bg-teal-50/20 transition-all col-span-2 group">
+                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-500 hover:bg-teal-50/20 transition-all col-span-2 group">
                                         <input
                                             type="checkbox"
                                             checked={settings.showBackground}
                                             onChange={(e) => setSettings({ ...settings, showBackground: e.target.checked })}
-                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300"
+                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                         />
-                                        <div className="flex items-center gap-2 text-sm text-gray-700 font-medium group-hover:text-teal-900 transition-colors">
-                                            <ImageIcon size={16} className="text-gray-400 group-hover:text-teal-500" />
+                                        <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 font-medium group-hover:text-teal-900 dark:group-hover:text-teal-400 transition-colors">
+                                            <ImageIcon size={16} className="text-gray-400 dark:text-gray-500 group-hover:text-teal-500" />
                                             <span>Show Cheque Image in Preview</span>
                                         </div>
                                     </label>
@@ -331,32 +333,32 @@ export const Home: React.FC = () => {
                         </div>
 
                         {/* Calibration Panel - Always Visible */}
-                        <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
-                            <div className="px-6 py-4 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">
-                                <Settings size={16} className="text-gray-500" />
-                                <h3 className="text-sm font-semibold text-gray-800">Print Calibration</h3>
+                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 overflow-hidden transition-all">
+                            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 flex items-center gap-2">
+                                <Settings size={16} className="text-gray-500 dark:text-gray-400" />
+                                <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">Print Calibration</h3>
                             </div>
                             <div className="p-5 space-y-6">
                                 {/* Global Offset */}
-                                <div className="space-y-3 pb-4 border-b border-slate-100">
-                                    <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Global Offset</h4>
+                                <div className="space-y-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+                                    <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">Global Offset</h4>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-[10px] font-medium text-slate-500 mb-1">Global X (mm)</label>
+                                            <label className="block text-[10px] font-medium text-gray-500 dark:text-gray-400 mb-1">Global X (mm)</label>
                                             <input
                                                 type="number"
                                                 value={settings.offsetX}
                                                 onChange={(e) => setSettings({ ...settings, offsetX: Number(e.target.value) })}
-                                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm"
+                                                className="w-full px-2 py-1.5 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-sm"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-[10px] font-medium text-slate-500 mb-1">Global Y (mm)</label>
+                                            <label className="block text-[10px] font-medium text-gray-500 dark:text-gray-400 mb-1">Global Y (mm)</label>
                                             <input
                                                 type="number"
                                                 value={settings.offsetY}
                                                 onChange={(e) => setSettings({ ...settings, offsetY: Number(e.target.value) })}
-                                                className="w-full px-2 py-1.5 border border-slate-200 rounded text-sm"
+                                                className="w-full px-2 py-1.5 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-sm"
                                             />
                                         </div>
                                     </div>
@@ -364,7 +366,7 @@ export const Home: React.FC = () => {
 
                                 {/* Font Size */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 mb-1">Font Size (pt)</label>
+                                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Font Size (pt)</label>
                                     <div className="flex items-center gap-3">
                                         <input
                                             type="range"
@@ -373,15 +375,15 @@ export const Home: React.FC = () => {
                                             onChange={(e) => setSettings({ ...settings, fontSize: Number(e.target.value) })}
                                             className="flex-1"
                                         />
-                                        <div className="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-600 w-12 text-center">{settings.fontSize}pt</div>
+                                        <div className="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-600 dark:text-gray-300 w-12 text-center">{settings.fontSize}pt</div>
                                     </div>
                                 </div>
 
                                 {/* Individual Offsets */}
                                 <div className="space-y-3">
-                                    <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-between">
+                                    <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center justify-between">
                                         <span>Fine-tune Features</span>
-                                        <span className="text-[10px] font-normal text-slate-400 normal-case">(X / Y mm)</span>
+                                        <span className="text-[10px] font-normal text-gray-400 dark:text-gray-500 normal-case">(X / Y mm)</span>
                                     </h4>
 
                                     <div className="space-y-2">
@@ -394,21 +396,21 @@ export const Home: React.FC = () => {
                                             { id: 'bearer', label: 'Bearer Strike' },
                                         ].map((field) => (
                                             <div key={field.id} className="flex items-center justify-between gap-2 text-sm">
-                                                <span className="text-slate-600 text-xs w-24 truncate" title={field.label}>{field.label}</span>
+                                                <span className="text-gray-600 dark:text-gray-400 text-xs w-24 truncate" title={field.label}>{field.label}</span>
                                                 <div className="flex gap-2 flex-1">
                                                     <input
                                                         type="number"
                                                         placeholder="X"
                                                         value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].x}
                                                         onChange={(e) => updateFieldOffset(field.id as any, 'x', Number(e.target.value))}
-                                                        className="w-full px-2 py-1 border border-slate-200 rounded text-xs"
+                                                        className="w-full px-2 py-1 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-xs"
                                                     />
                                                     <input
                                                         type="number"
                                                         placeholder="Y"
                                                         value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].y}
                                                         onChange={(e) => updateFieldOffset(field.id as any, 'y', Number(e.target.value))}
-                                                        className="w-full px-2 py-1 border border-slate-200 rounded text-xs"
+                                                        className="w-full px-2 py-1 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-xs"
                                                     />
                                                 </div>
                                             </div>
@@ -425,8 +427,8 @@ export const Home: React.FC = () => {
 
                     {/* Right Column: Preview */}
                     <div className="lg:col-span-2 space-y-4">
-                        <div className="bg-gray-100 rounded-3xl p-4 lg:p-10 min-h-[500px] flex flex-col items-center justify-center relative shadow-inner border border-gray-200">
-                            <div className="absolute top-6 left-8 text-xs font-bold text-gray-400 uppercase tracking-widest no-print flex items-center gap-2">
+                        <div className="bg-gray-100 dark:bg-gray-900 rounded-3xl p-4 lg:p-10 min-h-[500px] flex flex-col items-center justify-center relative shadow-inner border border-gray-200 dark:border-gray-800 transition-colors">
+                            <div className="absolute top-6 left-8 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest no-print flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
                                 Live Preview ({selectedLayout.name})
                             </div>
@@ -445,8 +447,8 @@ export const Home: React.FC = () => {
                             </div>
 
                             <div className="mt-8 max-w-md text-center no-print">
-                                <h4 className="text-sm font-semibold text-slate-800 mb-2">Printing Tips</h4>
-                                <ul className="text-xs text-slate-500 space-y-1 text-left list-disc pl-5">
+                                <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300 mb-2">Printing Tips</h4>
+                                <ul className="text-xs text-gray-500 dark:text-gray-500 space-y-1 text-left list-disc pl-5">
                                     <li>Insert the cheque leaf into the printer tray (usually face down, top edge first, but varies by printer).</li>
                                     <li>Disable "Headers and Footers" in your browser's print dialog.</li>
                                     <li>Set paper size to "A4" or custom if your driver supports it. The content is positioned absolutely for A4 sheets.</li>
