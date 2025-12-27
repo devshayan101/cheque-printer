@@ -142,7 +142,7 @@ The updated `index.html` now includes comprehensive meta tags that help search e
 ```html
 <title>ChequeKart - Online Cheque Printing Software for Indian Banks</title>
 <meta name="description" content="Print error-free Indian bank cheques instantly with ChequeKart..." />
-<meta name="keywords" content="online cheque printing, cheque printer India..." />
+<meta name="keywords" content="online cheque printing, free cheque printing, free check printing, cheque printer India, cheque printing software, online cheque printing software, free cheque printing software, cheque printing software India, online cheque printing software India, free cheque printing software India, free check printer, free check printer software" />
 ```
 
 **Recommendation:** Update meta descriptions for each bank-specific page to be unique and keyword-rich.

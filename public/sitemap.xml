@@ -6,7 +6,7 @@
   <!-- Main Home Page -->
   <url>
     <loc>https://chequekart.org/</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,64 +18,113 @@
   <!-- Bank-Specific Pages -->
   <url>
     <loc>https://chequekart.org/hdfc</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://chequekart.org/icici</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://chequekart.org/sbi</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://chequekart.org/canara</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/axis</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/pnb</loc>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://chequekart.org/bob</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/kotak</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/union</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/idfc</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/indusind</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/yes</loc>
+    <lastmod>2025-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chequekart.org/indian</loc>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Information Pages -->
   <url>
-    <loc>https://chequekart.org/about</loc>
-    <lastmod>2025-12-14</lastmod>
+    <loc>https://chequekart.org/about-us</loc>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>quarterly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://chequekart.org/faq</loc>
-    <lastmod>2025-12-14</lastmod>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://chequekart.org/privacy</loc>
-    <lastmod>2025-12-14</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://chequekart.org/terms</loc>
-    <lastmod>2025-12-14</lastmod>
+    <loc>https://chequekart.org/privacy-policy</loc>
+    <lastmod>2025-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

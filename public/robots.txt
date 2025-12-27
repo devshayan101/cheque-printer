@@ -29,7 +29,7 @@ Disallow: /
 
 # Sitemap location
 Sitemap: https://chequekart.org/sitemap.xml
-Sitemap: https://chequekart.org/sitemap-banks.xml
+
 
 # Request rate limiting
 Request-rate: 30/60
