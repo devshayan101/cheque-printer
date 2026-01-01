@@ -114,7 +114,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
     return (
         <div
             id="printable-area"
-            className="relative overflow-hidden bg-white print:bg-transparent select-none print:shadow-none"
+            className="relative overflow-hidden bg-white text-slate-900 print:bg-transparent select-none print:shadow-none"
             style={{
                 width: '203.2mm',
                 height: '93mm',
