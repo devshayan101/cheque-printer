@@ -69,10 +69,24 @@ export const Footer: React.FC = () => {
 
                     <div className="col-span-1">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h3>
-                        <ul className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <ul className="space-y-3 text-sm text-gray-500 dark:text-gray-400 mb-8">
                             <li><Link to="/about-us" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About Us</Link></li>
                             <li><Link to="/faq" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</Link></li>
                             <li><Link to="/privacy-policy" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy Policy</Link></li>
+                        </ul>
+
+                        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Contact Us</h3>
+                        <ul className="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                            <li>
+                                <a href="mailto:info@chequekart.org" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors flex items-center gap-2">
+                                    info@chequekart.org
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:feedback@chequekart.org" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors flex items-center gap-2">
+                                    feedback@chequekart.org
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

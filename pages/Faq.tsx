@@ -53,7 +53,19 @@ export const Faq: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </main >
-        </div >
+
+                <div className="mt-16 text-center">
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        Still have questions? We're here to help.
+                    </p>
+                    <a
+                        href="mailto:info@chequekart.org"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl shadow-lg shadow-teal-200/50 transition-all active:scale-95"
+                    >
+                        Contact Support
+                    </a>
+                </div>
+            </main>
+        </div>
     );
 };

@@ -56,7 +56,7 @@ export const PrivacyPolicy: React.FC = () => {
                     <section>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">4. Contact Us</h2>
                         <p>
-                            If you have any questions about this Privacy Policy, please contact us at privacy@chequekart.com.
+                            If you have any questions about this Privacy Policy, please contact us at info@chequekart.org.
                         </p>
                     </section>
                 </div>

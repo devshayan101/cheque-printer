@@ -75,6 +75,36 @@ export const AboutUs: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Contact */}
+                <div className="bg-gray-50 dark:bg-gray-950 py-24 border-t border-gray-100 dark:border-gray-800 transition-colors">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Get in Touch</h2>
+                        <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-light mb-12">
+                            We'd love to hear from you. Whether you have a question about features, pricing, or anything else, our team is ready to answer all your questions.
+                        </p>
+                        <div className="flex flex-col sm:flex-row justify-center gap-8">
+                            <a href="mailto:info@chequekart.org" className="flex items-center justify-center gap-3 px-8 py-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg shadow-gray-100 dark:shadow-none border border-gray-100 dark:border-gray-800 hover:border-teal-500 dark:hover:border-teal-500 hover:shadow-xl transition-all group">
+                                <div className="p-2 bg-teal-50 dark:bg-teal-900/30 rounded-lg text-teal-600 dark:text-teal-400 group-hover:scale-110 transition-transform">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">General Inquiries</div>
+                                    <div className="font-semibold text-gray-900 dark:text-gray-100">info@chequekart.org</div>
+                                </div>
+                            </a>
+                            <a href="mailto:feedback@chequekart.org" className="flex items-center justify-center gap-3 px-8 py-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg shadow-gray-100 dark:shadow-none border border-gray-100 dark:border-gray-800 hover:border-cyan-500 dark:hover:border-cyan-500 hover:shadow-xl transition-all group">
+                                <div className="p-2 bg-cyan-50 dark:bg-cyan-900/30 rounded-lg text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">Feedback & Support</div>
+                                    <div className="font-semibold text-gray-900 dark:text-gray-100">feedback@chequekart.org</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     );
