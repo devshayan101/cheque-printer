@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.print-font {
+  font-family: 'Courier Prime', monospace;
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 0mm;
+  }
+  
+  html, body {
+    height: auto;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-area, #printable-area * {
+    visibility: visible;
+  }
+
+  #printable-area {
+    position: fixed;
+    left: 2rem;
+    top: 0;
+    width: 203.2mm !important;
+    height: 93mm !important;
+    z-index: 9999;
+    background: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .cheque-bg {
+    opacity: 0 !important;
+    display: none !important;
+  }
+}

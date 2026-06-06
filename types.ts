@@ -11,6 +11,10 @@ export interface BankLayout {
   id: string;
   name: string;
   imageUrl: string; // URL of the cheque leaf background
+  currencySymbol?: string; // e.g., '₹', '$', '£'
+  currencySystem?: 'indian' | 'international';
+  width?: number; // width in mm (default 203.2)
+  height?: number; // height in mm (default 93)
   // Coordinates in millimeters relative to top-left of the cheque
   coords: {
     date: { x: number; y: number; spacing: number }; // spacing between digits

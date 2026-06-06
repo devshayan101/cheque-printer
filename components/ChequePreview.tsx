@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChequeData, BankLayout, PrintSettings } from '../types';
-import { formatIndianNumber } from '../utils/currency';
+import { formatIndianNumber, formatNumber } from '../utils/currency';
 
 interface ChequePreviewProps {
     data: ChequeData;
@@ -111,13 +111,16 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
     // Split date into characters
     const dateParts = data.date ? data.date.split('-').reverse().join('').split('') : []; // YYYY-MM-DD -> DDMMYYYY -> ['D','D'...]
 
+    const widthMm = layout.width || 203.2;
+    const heightMm = layout.height || 93;
+
     return (
         <div
             id="printable-area"
             className="relative overflow-hidden bg-white text-slate-900 print:bg-transparent select-none print:shadow-none"
             style={{
-                width: '203.2mm',
-                height: '93mm',
+                width: `${widthMm}mm`,
+                height: `${heightMm}mm`,
                 // Force background to fill dimensions exactly to maintain coordinate alignment
                 backgroundImage: settings.showBackground ? `url("${backgroundImage}")` : 'none',
                 backgroundSize: '100% 100%',
@@ -194,7 +197,7 @@ export const ChequePreview: React.FC<ChequePreviewProps> = ({ data, layout, sett
                     fontSize: `${fontSize + 2}pt` // Usually slightly larger
                 }}
             >
-                {data.amount ? `${formatIndianNumber(data.amount)}/-` : ''}
+                {data.amount ? `${layout.currencySymbol || '₹'} ${formatNumber(data.amount, layout.currencySystem || 'indian')}/-` : ''}
             </div>
 
             {/* Strike out 'Or Bearer' */}

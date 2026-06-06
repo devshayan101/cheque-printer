@@ -1,13 +1,19 @@
 import React from 'react';
-import { Navbar } from '../components/Navbar';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 
-export const Faq: React.FC = () => {
+export const metadata = {
+  title: 'FAQ - ChequeKart',
+  description: 'Frequently Asked Questions about online cheque printing with ChequeKart.',
+};
+
+export default function FaqPage() {
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300 flex flex-col">
             <Navbar />
 
-            <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center justify-center p-3.5 bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-2xl mb-6 shadow-sm shadow-teal-100 dark:shadow-none">
                         <HelpCircle size={32} />
@@ -17,7 +23,6 @@ export const Faq: React.FC = () => {
                         Everything you need to know about ChequeKart and printing cheques.
                     </p>
                 </div>
-
 
                 <div className="space-y-6">
                     {[
@@ -66,6 +71,7 @@ export const Faq: React.FC = () => {
                     </a>
                 </div>
             </main>
+            <Footer />
         </div>
     );
-};
+}

@@ -1,29 +1,22 @@
+'use client';
+
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AlignHorizontalJustifyStart, ArrowRight } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
+import { useSession, signOut } from 'next-auth/react';
 
 export const Navbar: React.FC = () => {
-    const location = useLocation();
-    const { theme } = useTheme();
-    const isHome = location.pathname === '/';
-
-    // Determine which logo to show
-    // Note: 'system' preference is resolved to 'light' or 'dark' in the context, but the context exposes the raw preference.
-    // We should ideally check if we need to resolve it, but for simplicity let's rely on a check.
-    // Actually our ThemeContext applies class 'dark' to HTML. We can just use the 'dark' class logic?
-    // No, we need to swap the image source. This requires JS logic.
-    // A robust way for 'system' is to check window matchMedia or rely on the fact that your ThemeContext might expose the *resolved* theme if updated so.
-    // However, looking at your ThemeContext implementation, it exposes `theme` as "light" | "dark" | "system".
-    // If "system", the image swap might be tricky without a helper.
-    // Let's use a simple CSS-based swap using <picture> or just CSS classes to hide/show images?
-    // CSS-based is seamless and avoids hydration mismatch.
+    const pathname = usePathname();
+    const { data: session } = useSession();
+    const isHome = pathname === '/';
 
     return (
         <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 dark:bg-gray-900/90 dark:border-gray-800 sticky top-0 z-50 no-print transition-colors">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                <Link to="/" className="flex items-center gap-3 group">
+                <Link href="/" className="flex items-center gap-3 group">
                     <div className="relative w-8 h-8">
                         <img
                             src="/images/logo.png"
@@ -46,14 +39,36 @@ export const Navbar: React.FC = () => {
 
                 <nav className="flex items-center gap-6">
                     <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
-                        <Link to="/about-us" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</Link>
-                        <Link to="/faq" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</Link>
+                        <Link href="/about-us" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About</Link>
+                        <Link href="/faq" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</Link>
+                        {session && (
+                            <Link href="/scan" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors font-semibold text-teal-600 dark:text-teal-400">Scan & Custom Templates</Link>
+                        )}
                     </div>
                     <ThemeToggle />
 
+                    {session ? (
+                        <div className="flex items-center gap-3">
+                            <span className="text-xs text-gray-500 dark:text-gray-400 hidden sm:inline">Hi, {session.user?.name || session.user?.email}</span>
+                            <button
+                                onClick={() => signOut()}
+                                className="text-xs text-red-500 hover:underline"
+                            >
+                                Sign Out
+                            </button>
+                        </div>
+                    ) : (
+                        <Link
+                            href="/login"
+                            className="text-xs font-semibold text-gray-600 dark:text-gray-300 hover:text-teal-600"
+                        >
+                            Sign In / Register
+                        </Link>
+                    )}
+
                     {!isHome && (
                         <Link
-                            to="/"
+                            href="/"
                             className="bg-teal-50 hover:bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:hover:bg-teal-900/50 dark:text-teal-300 dark:border-teal-800 px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors border border-teal-100"
                         >
                             Open App <ArrowRight size={16} />

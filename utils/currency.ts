@@ -1,7 +1,7 @@
 /**
- * Converts a number to Indian currency format words (e.g., "One Lakh Twenty Thousand...")
+ * Converts a number to currency format words
  */
-export const numberToWords = (num: number): string => {
+export const numberToWords = (num: number, system: 'indian' | 'international' = 'indian'): string => {
   if (num === 0) return "";
 
   const a = [
@@ -39,34 +39,52 @@ export const numberToWords = (num: number): string => {
     "Ninety",
   ];
 
-  const regex = /^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/;
-
   const getLT20 = (n: number) => a[Number(n)];
   const getTens = (n: number) => {
     return b[Math.floor(n / 10)] + " " + a[n % 10];
   };
 
-  const convert = (n: number): string => {
+  const convertIndian = (n: number): string => {
     if (n < 20) return getLT20(n);
     if (n < 100) return getTens(n);
     if (n < 1000)
       return (
-        getLT20(Math.floor(n / 100)) + "Hundred " + convert(n % 100)
+        getLT20(Math.floor(n / 100)) + "Hundred " + convertIndian(n % 100)
       );
     if (n < 100000)
       return (
-        convert(Math.floor(n / 1000)) + "Thousand " + convert(n % 1000)
+        convertIndian(Math.floor(n / 1000)) + "Thousand " + convertIndian(n % 1000)
       );
     if (n < 10000000)
       return (
-        convert(Math.floor(n / 100000)) + "Lakh " + convert(n % 100000)
+        convertIndian(Math.floor(n / 100000)) + "Lakh " + convertIndian(n % 100000)
       );
     return (
-      convert(Math.floor(n / 10000000)) + "Crore " + convert(n % 10000000)
+      convertIndian(Math.floor(n / 10000000)) + "Crore " + convertIndian(n % 10000000)
     );
   };
 
-  let words = convert(num);
+  const convertInternational = (n: number): string => {
+    if (n < 20) return getLT20(n);
+    if (n < 100) return getTens(n);
+    if (n < 1000)
+      return (
+        getLT20(Math.floor(n / 100)) + "Hundred " + convertInternational(n % 100)
+      );
+    if (n < 1000000)
+      return (
+        convertInternational(Math.floor(n / 1000)) + "Thousand " + convertInternational(n % 1000)
+      );
+    if (n < 1000000000)
+      return (
+        convertInternational(Math.floor(n / 1000000)) + "Million " + convertInternational(n % 1000000)
+      );
+    return (
+      convertInternational(Math.floor(n / 1000000000)) + "Billion " + convertInternational(n % 1000000000)
+    );
+  };
+
+  let words = system === 'international' ? convertInternational(num) : convertIndian(num);
   // Cleanup extra spaces
   words = words.replace(/\s+/g, " ").trim();
   return `${words} Only`;
@@ -80,4 +98,11 @@ export const formatIndianNumber = (num: number): string => {
     return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree;
   }
   return lastThree;
+};
+
+export const formatNumber = (num: number, system: 'indian' | 'international' = 'indian'): string => {
+  if (system === 'international') {
+    return num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+  return formatIndianNumber(num);
 };

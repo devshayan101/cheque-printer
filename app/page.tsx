@@ -1,12 +1,23 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+'use client';
+
+import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { ChequeData, BankLayout, PrintSettings } from '../types';
 import { numberToWords } from '../utils/currency';
 import { BANK_LAYOUTS } from '../utils/constants';
 import { ChequePreview } from '../components/ChequePreview';
-import { Printer, Settings, Building2, Type, Image as ImageIcon, Upload } from 'lucide-react';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { Printer, Settings, Building2, Type, Image as ImageIcon, Upload, LogIn, Sparkles } from 'lucide-react';
+import { ThemeToggle } from '../components/ThemeToggle';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
 
-export const Home: React.FC = () => {
+function ChequePrinterApp() {
+    const { data: session } = useSession();
+    const searchParams = useSearchParams();
+    const bankParam = searchParams.get('bank');
+
     // State
     const [data, setData] = useState<ChequeData>({
         payee: '',
@@ -19,6 +30,7 @@ export const Home: React.FC = () => {
 
     const [selectedBankId, setSelectedBankId] = useState<string>('canara');
     const [customBg, setCustomBg] = useState<string | null>(null);
+    const [customLayouts, setCustomLayouts] = useState<BankLayout[]>([]);
     const [settings, setSettings] = useState<PrintSettings>({
         offsetX: 0,
         offsetY: 0,
@@ -34,8 +46,42 @@ export const Home: React.FC = () => {
         }
     });
 
+    // Fetch Custom templates from DB
+    useEffect(() => {
+        if (session) {
+            fetch('/api/templates')
+                .then(res => res.json())
+                .then((dataList: any[]) => {
+                    const mapped: BankLayout[] = dataList.map(t => ({
+                        id: `custom-${t.id}`,
+                        name: `[Custom] ${t.name}`,
+                        imageUrl: t.imageUrl || '',
+                        currencySymbol: '$', // Default USD for custom international cheques
+                        currencySystem: 'international',
+                        width: t.width,
+                        height: t.height,
+                        coords: typeof t.coords === 'string' ? JSON.parse(t.coords) : t.coords
+                    }));
+                    setCustomLayouts(mapped);
+                })
+                .catch(err => console.error(err));
+        } else {
+            setCustomLayouts([]);
+        }
+    }, [session]);
+
+    // Merge standard layouts with user custom layouts
+    const layouts = [...BANK_LAYOUTS, ...customLayouts];
+
+    // Read URL bank param
+    useEffect(() => {
+        if (bankParam && layouts.some(l => l.id === bankParam)) {
+            setSelectedBankId(bankParam);
+        }
+    }, [bankParam, layouts]);
+
     // Derived
-    const selectedLayout = BANK_LAYOUTS.find(b => b.id === selectedBankId) || BANK_LAYOUTS[0];
+    const selectedLayout = layouts.find(b => b.id === selectedBankId) || BANK_LAYOUTS[0];
 
     // Handlers
     const handleAmountChange = (val: string) => {
@@ -44,7 +90,7 @@ export const Home: React.FC = () => {
             setData(prev => ({
                 ...prev,
                 amount: num,
-                amountInWords: numberToWords(num)
+                amountInWords: numberToWords(num, selectedLayout.currencySystem || 'indian')
             }));
         } else {
             setData(prev => ({
@@ -55,7 +101,15 @@ export const Home: React.FC = () => {
         }
     };
 
-
+    // Update words conversion when bank layout changes
+    useEffect(() => {
+        if (data.amount !== '') {
+            setData(prev => ({
+                ...prev,
+                amountInWords: numberToWords(data.amount as number, selectedLayout.currencySystem || 'indian')
+            }));
+        }
+    }, [selectedBankId, selectedLayout.currencySystem, data.amount]);
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -92,17 +146,17 @@ export const Home: React.FC = () => {
     }, []);
 
     const handlePrint = () => {
-        // Standard window.print() often fails in sandboxed iframes (like AI previews) due to missing 'allow-modals'.
-        // We use a new window (popup) to create a clean print context.
         const printContent = document.getElementById('printable-area');
         if (!printContent) return;
 
         const printWindow = window.open('', '_blank', 'width=1100,height=600');
-
         if (!printWindow) {
             alert("Pop-up blocked. Please allow popups for this site to print the cheque.");
             return;
         }
+
+        const widthMm = selectedLayout.width || 203.2;
+        const heightMm = selectedLayout.height || 93;
 
         const html = `
       <!DOCTYPE html>
@@ -133,10 +187,10 @@ export const Home: React.FC = () => {
                     top: 0 !important;
                     left: 2rem !important;
                     margin: 0 !important;
-                    background-image: none !important; /* Always hide cheque background image when printing on paper */
+                    background-image: none !important;
                     border: none !important;
-                    width: 203.2mm !important;
-                    height: 93mm !important;
+                    width: ${widthMm}mm !important;
+                    height: ${heightMm}mm !important;
                 }
             }
           </style>
@@ -146,7 +200,6 @@ export const Home: React.FC = () => {
                 ${printContent.outerHTML}
             </div>
             <script>
-                // Wait for Tailwind and Fonts to load before triggering print
                 window.onload = () => {
                     setTimeout(() => {
                         window.print();
@@ -162,53 +215,15 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <div className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 pb-12 flex-grow transition-colors duration-300">
-            {/* Header */}
-            <header className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 no-print transition-colors">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="relative w-10 h-10">
-                            <img
-                                src="/images/logo.png"
-                                alt="ChequeKart Logo"
-                                className="w-10 h-10 object-contain absolute top-0 left-0 transition-opacity duration-300 dark:opacity-0"
-                            />
-                            <img
-                                src="/images/logo-dark.png"
-                                alt="ChequeKart Logo"
-                                className="w-10 h-10 object-contain absolute top-0 left-0 transition-opacity duration-300 opacity-0 dark:opacity-100"
-                            />
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-cyan-500">
-                                ChequeKart
-                            </h1>
-                            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">Smart Cheque Printer</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <ThemeToggle />
-                        <button
-                            type="button"
-                            onClick={handlePrint}
-                            className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-teal-200/50 flex items-center gap-2 transition-all active:scale-95 hover:shadow-teal-300/50"
-                        >
-                            <Printer size={18} /> Print Cheque
-                        </button>
-                    </div>
-                </div>
-            </header>
+        <div className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+            <Navbar />
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Left Column: Controls */}
                     <div className="lg:col-span-1 space-y-6 no-print">
-
-
-
                         {/* Main Form */}
-                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 overflow-hidden transition-all">
+                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
                             <div className="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-800/30 flex items-center justify-between">
                                 <h2 className="font-semibold text-gray-800 dark:text-gray-100 flex items-center gap-2">
                                     <Type size={18} className="text-teal-600" /> <span className="tracking-tight">Details</span>
@@ -227,9 +242,18 @@ export const Home: React.FC = () => {
                                                 onChange={(e) => setSelectedBankId(e.target.value)}
                                                 className="w-full pl-10 pr-4 py-2.5 bg-gray-50 hover:bg-white dark:bg-gray-800 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none appearance-none transition-all cursor-pointer text-gray-700 dark:text-gray-200 font-medium"
                                             >
-                                                {BANK_LAYOUTS.map(bank => (
-                                                    <option key={bank.id} value={bank.id}>{bank.name}</option>
-                                                ))}
+                                                <optgroup label="Standard Banks">
+                                                    {BANK_LAYOUTS.map(bank => (
+                                                        <option key={bank.id} value={bank.id}>{bank.name}</option>
+                                                    ))}
+                                                </optgroup>
+                                                {customLayouts.length > 0 && (
+                                                    <optgroup label="Custom Templates">
+                                                        {customLayouts.map(bank => (
+                                                            <option key={bank.id} value={bank.id}>{bank.name}</option>
+                                                        ))}
+                                                    </optgroup>
+                                                )}
                                             </select>
                                         </div>
 
@@ -247,15 +271,12 @@ export const Home: React.FC = () => {
                                             {customBg && (
                                                 <button
                                                     onClick={() => setCustomBg(null)}
-                                                    className="text-xs text-red-500 hover:text-red-600 font-medium px-2 py-1 hover:bg-red-50 rounded"
+                                                    className="text-xs text-red-500 hover:text-red-650 font-medium px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/20 rounded"
                                                 >
                                                     Reset
                                                 </button>
                                             )}
                                         </div>
-                                        <p className="text-[10px] text-slate-400 leading-tight">
-                                            * Upload a photo of your cheque to see exact alignment. The uploaded image is for preview only and will not print.
-                                        </p>
                                     </div>
                                 </div>
 
@@ -284,14 +305,17 @@ export const Home: React.FC = () => {
 
                                 {/* Amount Number */}
                                 <div>
-                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount (₹)</label>
-                                    <input
-                                        type="number"
-                                        value={data.amount}
-                                        onChange={(e) => handleAmountChange(e.target.value)}
-                                        placeholder="0.00"
-                                        className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none font-mono transition-all bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 text-lg font-medium text-teal-900 dark:text-teal-400"
-                                    />
+                                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
+                                    <div className="relative">
+                                        <span className="absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-bold">{selectedLayout.currencySymbol || '₹'}</span>
+                                        <input
+                                            type="number"
+                                            value={data.amount}
+                                            onChange={(e) => handleAmountChange(e.target.value)}
+                                            placeholder="0.00"
+                                            className="w-full pl-9 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 outline-none font-mono transition-all bg-gray-50 focus:bg-white dark:bg-gray-800 dark:focus:bg-gray-750 text-lg font-medium text-teal-900 dark:text-teal-400"
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Amount Words */}
@@ -326,25 +350,12 @@ export const Home: React.FC = () => {
                                         />
                                         <span className="text-sm text-gray-700 dark:text-gray-300 font-medium group-hover:text-teal-900 dark:group-hover:text-teal-400 transition-colors">Bearer (No Strike)</span>
                                     </label>
-
-                                    <label className="flex items-center gap-3 cursor-pointer bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-500 hover:bg-teal-50/20 transition-all col-span-2 group">
-                                        <input
-                                            type="checkbox"
-                                            checked={settings.showBackground}
-                                            onChange={(e) => setSettings({ ...settings, showBackground: e.target.checked })}
-                                            className="rounded text-teal-600 focus:ring-teal-500 w-4 h-4 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                        />
-                                        <div className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 font-medium group-hover:text-teal-900 dark:group-hover:text-teal-400 transition-colors">
-                                            <ImageIcon size={16} className="text-gray-400 dark:text-gray-500 group-hover:text-teal-500" />
-                                            <span>Show Cheque Image in Preview</span>
-                                        </div>
-                                    </label>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Calibration Panel - Always Visible */}
-                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-black/20 border border-gray-100 dark:border-gray-800 overflow-hidden transition-all">
+                        {/* Calibration Panel */}
+                        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
                             <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 flex items-center gap-2">
                                 <Settings size={16} className="text-gray-500 dark:text-gray-400" />
                                 <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-100">Print Calibration</h3>
@@ -389,59 +400,44 @@ export const Home: React.FC = () => {
                                         <div className="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-600 dark:text-gray-300 w-12 text-center">{settings.fontSize}pt</div>
                                     </div>
                                 </div>
-
-                                {/* Individual Offsets */}
-                                <div className="space-y-3">
-                                    <h4 className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center justify-between">
-                                        <span>Fine-tune Features</span>
-                                        <span className="text-[10px] font-normal text-gray-400 dark:text-gray-500 normal-case">(X / Y mm)</span>
-                                    </h4>
-
-                                    <div className="space-y-2">
-                                        {[
-                                            { id: 'payee', label: 'Payee Name' },
-                                            { id: 'date', label: 'Date' },
-                                            { id: 'amountWords', label: 'Amount (Words)' },
-                                            { id: 'amountNumber', label: 'Amount (Number)' },
-                                            { id: 'acPayee', label: 'A/C Payee' },
-                                            { id: 'bearer', label: 'Bearer Strike' },
-                                        ].map((field) => (
-                                            <div key={field.id} className="flex items-center justify-between gap-2 text-sm">
-                                                <span className="text-gray-600 dark:text-gray-400 text-xs w-24 truncate" title={field.label}>{field.label}</span>
-                                                <div className="flex gap-2 flex-1">
-                                                    <input
-                                                        type="number"
-                                                        placeholder="X"
-                                                        value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].x}
-                                                        onChange={(e) => updateFieldOffset(field.id as any, 'x', Number(e.target.value))}
-                                                        className="w-full px-2 py-1 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-xs"
-                                                    />
-                                                    <input
-                                                        type="number"
-                                                        placeholder="Y"
-                                                        value={settings.fieldOffsets[field.id as keyof typeof settings.fieldOffsets].y}
-                                                        onChange={(e) => updateFieldOffset(field.id as any, 'y', Number(e.target.value))}
-                                                        className="w-full px-2 py-1 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 rounded text-xs"
-                                                    />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <p className="text-[10px] text-slate-400 italic leading-tight pt-2 border-t border-slate-100">
-                                    * Positive X moves right, Positive Y moves down.
-                                </p>
                             </div>
                         </div>
+
+                        {/* Login CTA */}
+                        {!session && (
+                            <div className="p-4 bg-teal-500/10 dark:bg-teal-950/20 border border-teal-500/20 rounded-2xl text-center space-y-3">
+                                <Sparkles size={24} className="mx-auto text-teal-600 dark:text-teal-400" />
+                                <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm">Create Custom Templates</h4>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                                    Sign in to scan and save your own layouts for any cheque size in the world.
+                                </p>
+                                <Link
+                                    href="/login"
+                                    className="inline-block px-4 py-2 bg-teal-650 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition-all"
+                                >
+                                    Sign In / Register
+                                </Link>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Right Column: Preview */}
-                    <div className="lg:col-span-2 space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-900 rounded-3xl p-4 lg:p-10 min-h-[500px] flex flex-col items-center justify-center relative shadow-inner border border-gray-200 dark:border-gray-800 transition-colors">
+                    {/* Right Column: Preview & Print Action */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <div className="bg-gray-100 dark:bg-gray-900 rounded-3xl p-6 lg:p-10 min-h-[500px] flex flex-col items-center justify-center relative shadow-inner border border-gray-200 dark:border-gray-800 transition-colors">
                             <div className="absolute top-6 left-8 text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest no-print flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
                                 Live Preview ({selectedLayout.name})
+                            </div>
+
+                            {/* Print Button */}
+                            <div className="absolute top-4 right-8 no-print">
+                                <button
+                                    type="button"
+                                    onClick={handlePrint}
+                                    className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-teal-200/50 flex items-center gap-2 transition-all active:scale-95 hover:shadow-teal-300/50"
+                                >
+                                    <Printer size={18} /> Print Cheque
+                                </button>
                             </div>
 
                             {/* Responsive Scroll Container */}
@@ -460,16 +456,30 @@ export const Home: React.FC = () => {
                             <div className="mt-8 max-w-md text-center no-print">
                                 <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-300 mb-2">Printing Tips</h4>
                                 <ul className="text-xs text-gray-500 dark:text-gray-500 space-y-1 text-left list-disc pl-5">
-                                    <li>Insert the cheque leaf into the printer tray (usually face down, top edge first, but varies by printer).</li>
+                                    <li>Insert the cheque leaf into the printer tray (usually face down, top edge first).</li>
                                     <li>Disable "Headers and Footers" in your browser's print dialog.</li>
-                                    <li>Set paper size to "A4" or custom if your driver supports it. The content is positioned absolutely for A4 sheets.</li>
-                                    <li>The background image will <strong>not</strong> print, only the text will.</li>
+                                    <li>Set paper size to "A4" or matching size.</li>
+                                    <li>The background template image will <strong>not</strong> print, only your filled fields will.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
+
+            <Footer />
         </div>
     );
-};
+}
+
+export default function HomePage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">
+                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-teal-500"></div>
+            </div>
+        }>
+            <ChequePrinterApp />
+        </Suspense>
+    );
+}

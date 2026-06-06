@@ -9,6 +9,40 @@ const DEFAULT_CHEQUE_IMAGE = CANARA_CHEQUE_IMAGE;
 
 export const BANK_LAYOUTS: BankLayout[] = [
   {
+    id: 'chase',
+    name: 'Chase Bank (USD)',
+    imageUrl: DEFAULT_CHEQUE_IMAGE,
+    currencySymbol: '$',
+    currencySystem: 'international',
+    width: 152.4,
+    height: 69.85,
+    coords: {
+      date: { x: 115, y: 8, spacing: 3.5 },
+      payee: { x: 12, y: 20 },
+      amountWords: { x: 12, y: 28, lineHeight: 6.5, width: 105 },
+      amountNumber: { x: 125, y: 20 },
+      bearer: { x: 0, y: 0 },
+      acPayee: { x: 12, y: 4 }
+    }
+  },
+  {
+    id: 'barclays',
+    name: 'Barclays Bank (GBP)',
+    imageUrl: DEFAULT_CHEQUE_IMAGE,
+    currencySymbol: '£',
+    currencySystem: 'international',
+    width: 203.2,
+    height: 93,
+    coords: {
+      date: { x: 154, y: 8, spacing: 5.0 },
+      payee: { x: 16, y: 20 },
+      amountWords: { x: 25, y: 30, lineHeight: 8, width: 130 },
+      amountNumber: { x: 156, y: 36 },
+      bearer: { x: 180, y: 23 },
+      acPayee: { x: 40, y: 5 }
+    }
+  },
+  {
     id: 'canara',
     name: 'Canara Bank',
     imageUrl: CANARA_CHEQUE_IMAGE,

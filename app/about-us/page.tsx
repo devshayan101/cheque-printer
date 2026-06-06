@@ -1,13 +1,19 @@
 import React from 'react';
-import { Navbar } from '../components/Navbar';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
 import { Users, Target, Zap } from 'lucide-react';
 
-export const AboutUs: React.FC = () => {
+export const metadata = {
+  title: 'About Us - ChequeKart',
+  description: 'Learn why we built ChequeKart and our values behind simplifying cheque printing.',
+};
+
+export default function AboutUsPage() {
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300 flex flex-col">
             <Navbar />
 
-            <main>
+            <main className="flex-grow">
                 {/* Hero */}
                 <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 transition-colors">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
@@ -27,7 +33,7 @@ export const AboutUs: React.FC = () => {
                             <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Why we built this</h2>
                             <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
                                 <p>
-                                    Writing cheques by hand is tedious, error-prone, and often looks unprofessional. Existing software is either too expensive, outdated, or difficult to configure for Indian banks.
+                                    Writing cheques by hand is tedious, error-prone, and often looks unprofessional. Existing software is either too expensive, outdated, or difficult to configure for bank layouts.
                                 </p>
                                 <p>
                                     ChequeKart bridges this gap. We provide a modern, web-based solution that requires no installation, respects your privacy, and works with any standard printer.
@@ -41,7 +47,7 @@ export const AboutUs: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-gray-900 dark:text-gray-100 text-lg">Precision</h4>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Pixel-perfect alignment for standard CTS-2010 cheques.</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Pixel-perfect alignment for standard bank cheques.</p>
                                 </div>
                             </div>
                             <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 flex gap-4 hover:shadow-xl transition-all">
@@ -57,7 +63,7 @@ export const AboutUs: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Team */}
+                {/* Values */}
                 <div className="bg-white dark:bg-gray-900 py-24 border-t border-gray-100 dark:border-gray-800 transition-colors">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-12 tracking-tight">Our Values</h2>
@@ -81,7 +87,7 @@ export const AboutUs: React.FC = () => {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Get in Touch</h2>
                         <p className="text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-light mb-12">
-                            We'd love to hear from you. Whether you have a question about features, pricing, or anything else, our team is ready to answer all your questions.
+                            We'd love to hear from you. Whether you have a question about features or anything else, our team is ready to answer.
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-8">
                             <a href="mailto:info@chequekart.org" className="flex items-center justify-center gap-3 px-8 py-4 bg-white dark:bg-gray-900 rounded-xl shadow-lg shadow-gray-100 dark:shadow-none border border-gray-100 dark:border-gray-800 hover:border-teal-500 dark:hover:border-teal-500 hover:shadow-xl transition-all group">
@@ -106,6 +112,7 @@ export const AboutUs: React.FC = () => {
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
     );
-};
+}

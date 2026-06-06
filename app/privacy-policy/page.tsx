@@ -1,13 +1,19 @@
 import React from 'react';
-import { Navbar } from '../components/Navbar';
+import { Navbar } from '../../components/Navbar';
+import { Footer } from '../../components/Footer';
 import { Shield, Lock, Eye } from 'lucide-react';
 
-export const PrivacyPolicy: React.FC = () => {
+export const metadata = {
+  title: 'Privacy Policy - ChequeKart',
+  description: 'Learn how ChequeKart secures your bank cheque data with offline processing and local storage.',
+};
+
+export default function PrivacyPolicyPage() {
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300 flex flex-col">
             <Navbar />
 
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
                 <div className="mb-12">
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6 tracking-tight">Privacy Policy</h1>
                     <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">Last updated: {new Date().toLocaleDateString()}</p>
@@ -35,21 +41,21 @@ export const PrivacyPolicy: React.FC = () => {
                     <section>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">1. Information We Collect</h2>
                         <p>
-                            ChequeKart is designed as a client-side application. We do not collect, store, or share any personal information, banking details, or cheque data entered into the application.
+                            ChequeKart is designed primarily as a client-side application. For user template storage, templates are stored securely in a local database and are only accessible by you. We do not sell or share any bank details.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">2. Local Storage</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">2. Local Storage & Database</h2>
                         <p>
-                            We may use your browser's local storage solely to save your print preferences (such as calibration offsets) to improve your experience. This data never leaves your device.
+                            We may use your browser's local storage to save your print preferences. Custom cheque templates you design are saved in a secure SQLite database on your device (or self-hosted setup) tied to your secure authentication.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">3. Third-Party Services</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">3. Security</h2>
                         <p>
-                            We use standard web technologies. While we do not share data, the application is hosted on standard web infrastructure which may collect basic access logs (IP address, user agent) for security and maintenance purposes.
+                            We prioritize data security by using industry-standard password hashing (bcrypt) and session management techniques.
                         </p>
                     </section>
 
@@ -61,6 +67,7 @@ export const PrivacyPolicy: React.FC = () => {
                     </section>
                 </div>
             </main>
+            <Footer />
         </div>
     );
-};
+}

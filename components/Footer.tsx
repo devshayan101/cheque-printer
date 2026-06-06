@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="col-span-1 md:col-span-4 lg:col-span-1">
-                        <Link to="/" className="flex items-center gap-2 mb-4 group">
+                        <Link href="/" className="flex items-center gap-2 mb-4 group">
                             <div className="relative w-8 h-8">
                                 <img
                                     src="/images/logo.png"
@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
                             </span>
                         </Link>
                         <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-w-xs mb-6">
-                            The professional standard for printing Indian bank cheques. Accurate, secure, and easy to use.
+                            The professional standard for printing Indian and international bank cheques. Accurate, secure, and easy to use.
                         </p>
                         <div className="flex gap-4">
                             <a href="#" className="text-gray-400 dark:text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"><Twitter size={20} /></a>
@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
                             {banks.map((bank) => (
                                 <Link
                                     key={bank.path}
-                                    to={bank.path}
+                                    href={bank.path}
                                     className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors truncate"
                                     title={bank.name}
                                 >
@@ -70,9 +70,9 @@ export const Footer: React.FC = () => {
                     <div className="col-span-1">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Company</h3>
                         <ul className="space-y-3 text-sm text-gray-500 dark:text-gray-400 mb-8">
-                            <li><Link to="/about-us" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About Us</Link></li>
-                            <li><Link to="/faq" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</Link></li>
-                            <li><Link to="/privacy-policy" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy Policy</Link></li>
+                            <li><Link href="/about-us" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">About Us</Link></li>
+                            <li><Link href="/faq" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</Link></li>
+                            <li><Link href="/privacy-policy" className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Privacy Policy</Link></li>
                         </ul>
 
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">Contact Us</h3>
