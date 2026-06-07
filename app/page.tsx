@@ -258,24 +258,34 @@ function ChequePrinterApp() {
                                         </div>
 
                                         {/* Custom Background Upload */}
-                                        <div className="flex items-center gap-2">
-                                            <label className="flex-1 cursor-pointer group">
-                                                <div className="flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50/50 dark:bg-gray-800/50 hover:bg-teal-50/30 hover:border-teal-400 transition-all">
-                                                    <Upload size={16} className="text-gray-400 dark:text-gray-500 group-hover:text-teal-600 transition-colors" />
-                                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">
-                                                        {customBg ? 'Change Cheque Image' : 'Upload Bank Cheque Image'}
-                                                    </span>
-                                                </div>
-                                                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                                            </label>
-                                            {customBg && (
-                                                <button
-                                                    onClick={() => setCustomBg(null)}
-                                                    className="text-xs text-red-500 hover:text-red-650 font-medium px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/20 rounded"
-                                                >
-                                                    Reset
-                                                </button>
-                                            )}
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex items-center gap-2">
+                                                <label className="flex-1 cursor-pointer group">
+                                                    <div className="flex items-center justify-center gap-2 px-4 py-2.5 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50/50 dark:bg-gray-800/50 hover:bg-teal-50/30 hover:border-teal-400 transition-all">
+                                                        <Upload size={16} className="text-gray-400 dark:text-gray-500 group-hover:text-teal-600 transition-colors" />
+                                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">
+                                                            {customBg ? 'Change Cheque Image' : 'Upload Cheque Image'}
+                                                        </span>
+                                                    </div>
+                                                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                                                </label>
+                                                {customBg && (
+                                                    <button
+                                                        onClick={() => setCustomBg(null)}
+                                                        className="text-xs text-red-500 hover:text-red-650 font-medium px-2 py-1 hover:bg-red-50 dark:hover:bg-red-950/20 rounded"
+                                                    >
+                                                        Reset
+                                                    </button>
+                                                )}
+                                            </div>
+
+                                            <Link
+                                                href="/scan"
+                                                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white rounded-xl text-xs font-bold transition-all active:scale-95 shadow-md shadow-teal-500/10 hover:shadow-teal-500/20"
+                                            >
+                                                <Sparkles size={14} className="animate-pulse" />
+                                                <span>Scan New Cheque with AI</span>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +414,7 @@ function ChequePrinterApp() {
                         </div>
 
                         {/* Login CTA */}
-                        {!session && (
+                        {!session ? (
                             <div className="p-4 bg-teal-500/10 dark:bg-teal-950/20 border border-teal-500/20 rounded-2xl text-center space-y-3">
                                 <Sparkles size={24} className="mx-auto text-teal-600 dark:text-teal-400" />
                                 <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm">Create Custom Templates</h4>
@@ -416,6 +426,20 @@ function ChequePrinterApp() {
                                     className="inline-block px-4 py-2 bg-teal-650 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition-all"
                                 >
                                     Sign In / Register
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="p-4 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/20 rounded-2xl text-center space-y-3 shadow-lg shadow-teal-150/5">
+                                <Sparkles size={24} className="mx-auto text-teal-650 dark:text-teal-400 animate-pulse" />
+                                <h4 className="font-bold text-gray-900 dark:text-gray-100 text-sm">Scan New Cheque with AI</h4>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+                                    Automatically detect layout details and coordinates from your cheque book.
+                                </p>
+                                <Link
+                                    href="/scan"
+                                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-500 hover:from-teal-700 hover:to-cyan-600 text-white text-xs font-bold rounded-xl shadow-md transition-all active:scale-95 w-full"
+                                >
+                                    Start AI Scanner
                                 </Link>
                             </div>
                         )}
